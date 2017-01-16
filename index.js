@@ -1,7 +1,6 @@
 const fs = require('fs')
 const SqlToMongoTranslator = require('./translator')
 
-
 const sql = "SELECT * FROM svista.balans WHERE card_no='8600000000000001'"
 const config = JSON.parse(fs.readFileSync('./translator.config.json'))
 const translator = new SqlToMongoTranslator(config)
