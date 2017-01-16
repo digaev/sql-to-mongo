@@ -13,12 +13,6 @@ class SqlToMongoTranslator {
 
   query (sql) {
     this._parseSql(sql)
-    this._tableName = strip(this._statement.source.toString())
-    this._tableOptions = this.config.tables[this._tableName]
-
-    if (!this._tableOptions) {
-      throw new Error(`Unknown table "${this._tableName}".`)
-    }
 
     const collection = this.mongodb.get(this._tableOptions.collection) // use associated collection
     const query = this._buildSelectQuery()
@@ -33,13 +27,28 @@ class SqlToMongoTranslator {
   _parseSql (sql) {
     const tokens = sqlParser.lexer.tokenize(sql)
     this._statement = sqlParser.parser.parse(tokens)
+    this._tableName = strip(this._statement.source.toString())
+    this._tableOptions = this.config.tables[this._tableName]
+
+    if (!this._tableOptions) {
+      throw new Error(`Unknown table "${this._tableName}".`)
+    }
+  }
+
+  _getAssociatedField (sqlField) {
+    const key = this._tableOptions.fields[sqlField]
+    if (!key) {
+      throw new Error(`Can not find associated field "${sqlField}"`)
+    }
+    return key
   }
 
   _getSelectedFields () {
     const fields = {}
     this._statement.fields.forEach((f) => {
       if (f.field) {
-        fields[strip(f.toString())] = 1
+        const key = this._getAssociatedField(strip(f.toString()))
+        fields[key] = 1
       }
     })
     return fields
@@ -55,7 +64,7 @@ class SqlToMongoTranslator {
       while (op.operation) {
         const andOr = ['and', 'or'].includes(op.operation.toLowerCase())
         const right = andOr ? op.right : op
-        const key = this._tableOptions.fields[right.left.value] // pick associated field name
+        const key = this._getAssociatedField(strip(right.left.toString()))
         const value = Array.isArray(right.right.value) ? right.right.value.map((v) => v.value) : right.right.value
         const conds = {}
 
