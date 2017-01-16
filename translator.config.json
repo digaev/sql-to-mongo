@@ -2,31 +2,31 @@
   "mongodb": {
     "url": "mongodb://localhost/secret_place"
   },
-	"tables": {
-		"svista.balans": {
-			"collection": "cards",
-			"fields": {
-				"card_no": "number",
-				"balance": "balance"
-			}
-		},
-		"svista.v_cref_tab": {
-			"collection": "cards",
-			"fields": {
-				"cref_no": "number"
-			}
-		},
-		"svista.v_card_acct_tab": {
-			"collection": "cards",
-			"fields": {
-				"card_no": "number"
-			}
-		},
-		"svista.passport_data": {
-			"collection": "cards",
-			"fields": {
-				"cref_no": "number"
-			}
-		}
-	}
+  "tables": {
+    "svista.balans": {
+      "collection": "cards",
+      "fields": {
+        "card_no": "number",
+        "balance": "balance"
+      }
+    },
+    "svista.v_cref_tab": {
+      "collection": "cards",
+      "fields": {
+        "cref_no": "number"
+      }
+    },
+    "svista.v_card_acct_tab": {
+      "collection": "cards",
+      "fields": {
+        "card_no": "number"
+      }
+    },
+    "svista.passport_data": {
+      "collection": "cards",
+      "fields": {
+        "cref_no": "number"
+      }
+    }
+  }
 }
