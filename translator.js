@@ -71,6 +71,10 @@ class SqlToMongoTranslator {
           case '=':
             conds[key] = value
             break
+          case '!=':
+          case '<>':
+            conds[key] = { $ne: value }
+            break
           case '>':
             conds[key] = { $gt: value }
             break
