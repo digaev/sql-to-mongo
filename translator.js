@@ -21,8 +21,8 @@ class SqlToMongoTranslator {
     }
 
     const collection = this.mongodb.get(this._tableOptions.collection) // use associated collection
-    const fields = this._getSelectedFields()
     const query = this._buildSelectQuery()
+    const fields = this._getSelectedFields()
 
     console.log('Fields: ' + util.inspect(fields))
     console.log('Conditions: ' + util.inspect(query, false, null))
