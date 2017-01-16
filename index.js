@@ -16,7 +16,7 @@ if (args.length === 0) {
     console.log('Result: ' + util.inspect(docs, false, null))
     return 0
   }).catch((err) => {
-    console.log('An error occured :( ' + err.message)
+    console.log(`An error occured :( ${err.message}`)
     return 1
   }).then(process.exit)
 }
