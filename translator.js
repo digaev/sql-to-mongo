@@ -15,7 +15,7 @@ class SqlToMongoTranslator {
     this._parseSql(sql)
 
     const collection = this.mongodb.get(this._tableOptions.collection) // use associated collection
-    const query = this._buildSelectQuery()
+    const query = this._getConditions()
     const fields = this._getSelectedFields()
 
     console.log('Fields: ' + util.inspect(fields))
@@ -54,7 +54,7 @@ class SqlToMongoTranslator {
     return fields
   }
 
-  _buildSelectQuery () {
+  _getConditions () {
     const query = {}
 
     if (this._statement.where) {

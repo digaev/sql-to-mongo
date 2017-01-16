@@ -30,9 +30,9 @@ describe('SqlToMongoTranslator', () => {
     })
   })
 
-  describe('#_buildSelectQuery()', () => {
+  describe('#_getConditions()', () => {
     it('should return conditions object', () => {
-      const query = translator._buildSelectQuery()
+      const query = translator._getConditions()
       expect(query).to.deep.equal({
         $and: [ { number: { '$in': [ '8600482914550428', '8600000000000001' ] } } ]
       })
