@@ -12,7 +12,7 @@ class SqlToMongoTranslator {
   }
 
   query (sql) {
-    this._parseSql(sql)
+    this._parseSql(sql.replace(/(\s|;)*$/, ''))
 
     const collection = this.mongodb.get(this._tableOptions.collection) // use associated collection
     const query = this._getConditions()
