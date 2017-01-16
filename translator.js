@@ -2,6 +2,9 @@ const monk = require('monk')
 const sqlParser = require('sql-parser')
 const util = require('util')
 
+// Used to remove backticks
+const strip = (s) => s.slice(1, -1)
+
 class SqlToMongoTranslator {
   constructor (config) {
     this.config = Object.assign({}, config)
@@ -10,7 +13,7 @@ class SqlToMongoTranslator {
 
   query (sql) {
     this._parseSql(sql)
-    this._tableName = this._statement.source.toString().slice(1, -1) // strip backticks
+    this._tableName = strip(this._statement.source.toString())
     this._tableOptions = this.config.tables[this._tableName]
 
     if (!this._tableOptions) {
@@ -35,8 +38,8 @@ class SqlToMongoTranslator {
   _getSelectedFields () {
     const fields = {}
     this._statement.fields.forEach((f) => {
-      if (f.field && f.field.value) {
-        fields[f.field.value] = 1
+      if (f.field) {
+        fields[strip(f.toString())] = 1
       }
     })
     return fields
