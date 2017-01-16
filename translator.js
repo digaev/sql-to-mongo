@@ -68,10 +68,6 @@ class SqlToMongoTranslator {
         const value = Array.isArray(right.right.value) ? right.right.value.map((v) => v.value) : right.right.value
         const conds = {}
 
-        if (!key) {
-          throw new Error(`Can not find associated field "${right.left.value}"`)
-        }
-
         if (andOr) {
           lastOp = `$${op.operation.toLowerCase()}`
         }
